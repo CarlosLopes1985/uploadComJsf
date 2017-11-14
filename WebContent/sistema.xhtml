@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+</h:head>
+<h:body>
+   	<p:panel header="Gravacao filme ...">
+     	  <h:form id="form1"  enctype="multipart/form-data">
+   	        <p:panelGrid columns="2">
+   	              <h:outputText value="Nome Filme" />
+   	              <p:inputText value="#{mb.filme.nomeFilme}" />
+   	              <h:outputText value="Autor" />
+   	              <p:inputText value="#{mb.filme.autor}" />
+   	              <h:outputText value="Caracteristica" />
+   	              <p:inputText value="#{mb.filme.caracteristica}" />
+   	             <h:outputText value="Descricao" />
+   	              <p:inputTextarea rows="4" cols="60"  autoResize="true" 
+   	               value="#{mb.filme.descricao}"
+   	              />
+   	              <h:outputText value="Imagem" />
+   	             <p:fileUpload value="#{mb.arquivo}"  mode="simple">
+   	             </p:fileUpload>   
+   	             
+   	             <h:outputText value="Video de Lancamento" />
+   	             <p:inputText value="#{mb.filme.trailler}"  >
+   	             </p:inputText>   
+   	        
+   	           <p:commandButton value="Cadastrar" ajax="false"
+   	             update=":form1" action="#{mb.gravar}"
+   	             ></p:commandButton>
+   	        
+   	        </p:panelGrid>
+   	      </h:form>
+	 </p:panel>
+
+ <p:panel header="Catalogo de Filmes">
+  <h:form id="form2">
+  <p:dataGrid value="#{mb.filmes}" var="linha" columns="2">
+    <h:panelGroup>
+     <p:commandLink update=":form3"  
+                 onclick="PF('janela').show()">
+      <p:graphicImage value="/imagem/#{linha.imagem}"
+       style="width:100px;height:100px" >
+      </p:graphicImage>    
+      <f:setPropertyActionListener value="#{linha}" 
+                                   target="#{mb.filme}">
+     </f:setPropertyActionListener>
+    </p:commandLink> 
+ 
+    </h:panelGroup>
+  </p:dataGrid>
+  </h:form>
+ </p:panel>
+ 
+  <p:dialog widgetVar="janela" modal="true" position="center top"
+    resizable="false" draggable="false" >
+  <h:form id="form3">
+    <p:panelGrid columns="2">
+     <f:facet name="header">
+        <p:graphicImage  value="/imagem/#{mb.filme.imagem}">
+        </p:graphicImage>
+     </f:facet>
+      <h:outputText value="nomeFilme" />
+      <p:outputLabel value="#{mb.filme.nomeFilme}" />
+          <h:outputText value="Vi­deo" />
+      <p:media value="#{mb.filme.trailler}" player="flash" />
+     </p:panelGrid>
+   </h:form>
+ </p:dialog>
+</h:body>
+</html>
+
